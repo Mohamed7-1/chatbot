@@ -1,0 +1,81 @@
+
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de données : `bot`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `chatbot`
+--
+
+CREATE TABLE `chatbot` (
+  `id` int(11) NOT NULL,
+  `queries` varchar(300) NOT NULL,
+  `replies` varchar(300) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `chatbot`
+--
+
+INSERT INTO `chatbot` (`id`, `queries`, `replies`) VALUES
+(9, 'What services does AYAM Digital Solutions offer?', 'AYAM Digital Solutions offers a range of services including web development, mobile app development, digital marketing, and IT consulting.'),
+(10, 'How can I contact AYAM Digital Solutions for a project?', 'You can contact us via our website contact form, email us at contact@ayamds.com, or call us at +123456789.'),
+(11, 'What technologies do you specialize in?', 'We specialize in a variety of technologies including JavaScript, Python, PHP, Java, and more.'),
+(12, 'Can AYAM Digital Solutions help with cloud migration?', 'Yes, we provide cloud migration services and can help you move your applications and data to the cloud.'),
+(13, 'Do you offer support and maintenance services?', 'Yes, we offer ongoing support and maintenance for all the solutions we develop.'),
+(14, 'Are your services available globally?', 'Yes, AYAM Digital Solutions offers services to clients around the world.'),
+(15, 'How do you ensure the security of your projects?', 'We follow industry best practices and implement robust security measures to ensure the safety and security of our projects.'),
+(16, 'Can you develop custom software solutions?', 'Yes, we specialize in building custom software solutions tailored to the specific needs of our clients.'),
+(17, 'What is your process for starting a new project?', 'Our process involves an initial consultation, requirement gathering, planning, development, testing, and deployment.'),
+(18, 'Do you provide training for the solutions you develop?', 'Yes, we provide comprehensive training to ensure that users can effectively use the solutions we develop.'),
+(19, 'What is your pricing model?', 'Our pricing model depends on the scope and complexity of the project. We offer both fixed-price and hourly-rate models.'),
+(20, 'How long does it take to complete a project?', 'The timeline for project completion varies depending on the size and complexity of the project. We provide estimated timelines during the planning phase.'),
+(21, 'Can you integrate third-party services into your solutions?', 'Yes, we can integrate various third-party services and APIs into our solutions.'),
+(22, 'Do you offer e-commerce development services?', 'Yes, we offer e-commerce development services including custom online stores and payment gateway integrations.'),
+(23, 'What industries do you serve?', 'We serve a wide range of industries including healthcare, finance, education, retail, and more.'),
+(24, 'Do you provide mobile app development?', 'Yes, we develop mobile applications for both iOS and Android platforms.'),
+(25, 'Can you help with digital marketing?', 'Yes, we offer digital marketing services including SEO, SEM, social media marketing, and content marketing.'),
+(26, 'What is your approach to project management?', 'We use agile project management methodologies to ensure flexibility and adaptability throughout the project lifecycle.'),
+(27, 'Do you have experience with AI and machine learning?', 'Yes, we have experience in developing solutions that leverage AI and machine learning technologies.'),
+(28, 'What sets AYAM Digital Solutions apart from other IT companies?', 'Our commitment to quality, customer satisfaction, and our ability to deliver innovative solutions tailored to the unique needs of our clients sets us apart.');
+
+--
+-- ndex pour les tables déchargéesI
+--
+
+--
+-- Index pour la table `chatbot`
+--
+ALTER TABLE `chatbot`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `chatbot`
+--
+ALTER TABLE `chatbot`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+

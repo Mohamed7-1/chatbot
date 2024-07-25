@@ -1,5 +1,8 @@
 
 
+/* cree une base donner nomme "bot" */
+/* cree un tableau nomme "chatbot"  */
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";

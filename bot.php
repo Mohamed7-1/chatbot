@@ -29,7 +29,7 @@ if (isset($_GET['logout'])) {
 }
 
 // Connexion à la base de données
-$conn = mysqli_connect("localhost", "root", "", "bot");
+$conn = mysqli_connect("localhost", "dolibarrmysql", "mohamed2017", "dolibarr");
 
 // Récupère les options prédéfinies depuis la base de données
 $sql = "SELECT queries, replies FROM chatbot";
@@ -74,7 +74,8 @@ while ($row = mysqli_fetch_assoc($result)) {
                     <i class="fas fa-user"></i>
                 </div>
                 <div class="msg-header">
-                    <p>Hello there, please select an option:</p>
+                    <p>welcom sir </p>
+                    <p>please select an option:</p>
                     <div class="options-container">
                         <!-- Affiche les options prédéfinies -->
                         <?php foreach ($options as $query => $reply): ?>
@@ -100,23 +101,23 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 <script>
 function sendMessage(message) {
-    // Ajoute le message utilisateur dans le chat
     var msg = '<div class="user-inbox inbox"><div class="msg-header"><p>User: ' + message + '</p></div></div>';
     $(".form").append(msg);
 
-    // Code AJAX pour envoyer le message au serveur
     $.ajax({
-        url: 'message.php', // Script qui gère la réponse du bot
+        url: 'message.php',
         type: 'POST',
-        data: 'text=' + message, // Données envoyées au serveur
-        success: function(result){
-            // Affiche la réponse du bot
-            var replay = '<div class="bot-inbox inbox"><div class="icon"><i class="fas fa-user"></i></div><div class="msg-header"><p>Bot: ' + result + '</p></div></div>';
+        data: { text: message },
+        success: function(response) {
+            var result = JSON.parse(response);
+            if (result.pdf) {
+                var replay = '<div class="bot-inbox inbox"><div class="icon"><i class="fas fa-user"></i></div><div class="msg-header"><p>Bot: <a href="' + result.pdf + '" target="_blank">Download PDF</a></p></div></div>';
+            } else {
+                var replay = '<div class="bot-inbox inbox"><div class="icon"><i class="fas fa-user"></i></div><div class="msg-header"><p>Bot: ' + result.error + '</p></div></div>';
+            }
             $(".form").append(replay);
-            // Fait défiler le chat vers le bas
             $(".form").animate({ scrollTop: $(".form")[0].scrollHeight}, 1000);
 
-            // Réaffiche les options après la réponse du bot
             var optionsHtml = '<div class="bot-inbox inbox"><div class="icon"><i class="fas fa-user"></i></div><div class="msg-header"><p>Please select another option:</p><div class="options-container">';
             <?php foreach ($options as $query => $reply): ?>
                 optionsHtml += '<button class="option-btn" onclick="sendMessage(\'<?= $query ?>\')"><?= $query ?></button>';

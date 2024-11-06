@@ -1,42 +1,43 @@
 <?php
-session_start(); // Démarre la session pour suivre les états de l'utilisateur
+session_start();
 
-// Gère l'affichage du chat
-if (isset($_GET['toggle_chat'])) {
-    // Inverse la visibilité du chat
-    $_SESSION['chat_visible'] = !isset($_SESSION['chat_visible']) || !$_SESSION['chat_visible'];
-    header("Location: bot.php"); // Redirige pour éviter la resoumission du formulaire
-    exit();
-}
-
-// Gère la suppression de l'historique du chat
-if (isset($_GET['clear_chat'])) {
-    unset($_SESSION['chat_history']); // Supprime l'historique du chat de la session
-    header("Location: bot.php"); // Redirige pour éviter la resoumission du formulaire
-    exit();
-}
-
-// Initialise la visibilité du chat si elle n'est pas définie
-if (!isset($_SESSION['chat_visible'])) {
-    $_SESSION['chat_visible'] = false; // Par défaut, le chat est masqué
-}
-
-// Gère la déconnexion
-if (isset($_GET['logout'])) {
-    session_destroy(); // Détruit la session
-    header("Location: index.php"); // Redirige l'utilisateur vers la page d'accueil
-    exit();
-}
-
-// Connexion à la base de données
+// Connexion à la base de données dans dolibarr
 $conn = mysqli_connect("localhost", "dolibarrmysql", "mohamed2017", "dolibarr");
+
+// Handle email submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])) {
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $insert_email = "INSERT INTO client_emails (email) VALUES ('$email')";
+    mysqli_query($conn, $insert_email);
+    $_SESSION['email_entered'] = true;
+}
+
+// Handle chat visibility toggle
+if (isset($_GET['toggle_chat'])) {
+    $_SESSION['chat_visible'] = !isset($_SESSION['chat_visible']) || !$_SESSION['chat_visible'];
+    header("Location: bot.php");
+    exit();
+}
+
+// Handle chat history clear
+if (isset($_GET['clear_chat'])) {
+    unset($_SESSION['chat_history']);
+    header("Location: bot.php");
+    exit();
+}
+
+// Handle logout
+if (isset($_GET['logout'])) {
+    session_destroy();
+    header("Location: bot.php");
+    exit();
+}
 
 // Récupère les options prédéfinies depuis la base de données
 $sql = "SELECT queries, replies FROM chatbot";
 $result = mysqli_query($conn, $sql);
 $options = array();
 while ($row = mysqli_fetch_assoc($result)) {
-    // Stocke les options sous forme de paires question-réponse
     $options[$row['queries']] = $row['replies'];
 }
 ?>
@@ -54,49 +55,62 @@ while ($row = mysqli_fetch_assoc($result)) {
 </head>
 <body>
 
-<!-- Bouton pour afficher/masquer le chat -->
-<button class="chat-toggle-btn" onclick="toggleChat()">
-    <i class="fas fa-comments"></i>
-</button>
-<!-- Bouton pour effacer l'historique du chat -->
-<button class="chat-clear-btn" onclick="clearChat()">
-    <i class="fas fa-trash-alt"></i>
-</button>
+<?php if (!isset($_SESSION['email_entered'])): ?>
+    <!-- Formulaire pour entrer l'email -->
+    <form method="post" action="">
+        <label for="email">Enter your email:</label>
+        <input type="email" name="email" id="email" required>
+        <button type="submit">Submit</button>
+    </form>
+<?php else: ?>
+    <!-- Bouton pour afficher/masquer le chat -->
+    <button class="chat-toggle-btn" onclick="toggleChat()">
+        <i class="fas fa-comments"></i>
+    </button>
+    <!-- Bouton pour effacer l'historique du chat -->
+    <button class="chat-clear-btn" onclick="clearChat()">
+        <i class="fas fa-trash-alt"></i>
+    </button>
+    <!-- Bouton pour déconnexion -->
+    <button class="chat-logout-btn" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+    </button>
 
-<?php if ($_SESSION['chat_visible']): ?>
-<!-- Conteneur du chat affiché si la session chat_visible est vraie -->
-<div class="chat-container chat-container-fixed">
-    <div class="wrapper">
-        <div class="title">Chat with us</div>
-        <div class="form">
-            <div class="bot-inbox inbox">
-                <div class="icon">
-                    <i class="fas fa-user"></i>
-                </div>
-                <div class="msg-header">
-                    <p>welcom sir </p>
-                    <p>please select an option:</p>
-                    <div class="options-container">
-                        <!-- Affiche les options prédéfinies -->
-                        <?php foreach ($options as $query => $reply): ?>
-                            <button class="option-btn" onclick="sendMessage('<?= $query ?>')"><?= $query ?></button>
-                        <?php endforeach; ?>
+    <?php if ($_SESSION['chat_visible']): ?>
+    <!-- Conteneur du chat affiché si la session chat_visible est vraie -->
+    <div class="chat-container chat-container-fixed">
+        <div class="wrapper">
+            <div class="title">Chat with us</div>
+            <div class="form">
+                <div class="bot-inbox inbox">
+                    <div class="icon">
+                        <i class="fas fa-user"></i>
                     </div>
-                </div>
-            </div>
-            <?php if (isset($_SESSION['chat_history'])): ?>
-                <!-- Affiche l'historique du chat -->
-                <?php foreach ($_SESSION['chat_history'] as $message): ?>
-                    <div class="inbox <?= strpos($message, 'User:') === 0 ? 'user-inbox' : 'bot-inbox' ?>">
-                        <div class="msg-header">
-                            <p><?= $message ?></p>
+                    <div class="msg-header">
+                        <p>Welcome sir</p>
+                        <p>Please select an option:</p>
+                        <div class="options-container">
+                            <!-- Affiche les options prédéfinies -->
+                            <?php foreach ($options as $query => $reply): ?>
+                                <button class="option-btn" onclick="sendMessage('<?= $query ?>')"><?= $query ?></button>
+                            <?php endforeach; ?>
                         </div>
                     </div>
-                <?php endforeach; ?>
-            <?php endif; ?>
+                </div>
+                <?php if (isset($_SESSION['chat_history'])): ?>
+                    <!-- Affiche l'historique du chat -->
+                    <?php foreach ($_SESSION['chat_history'] as $message): ?>
+                        <div class="inbox <?= strpos($message, 'User:') === 0 ? 'user-inbox' : 'bot-inbox' ?>">
+                            <div class="msg-header">
+                                <p><?= $message ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
-</div>
+    <?php endif; ?>
 <?php endif; ?>
 
 <script>
@@ -129,13 +143,15 @@ function sendMessage(message) {
 }
 
 function toggleChat() {
-    // Change l'état de visibilité du chat
     window.location.href = "bot.php?toggle_chat=true";
 }
 
 function clearChat() {
-    // Efface l'historique du chat
     window.location.href = "bot.php?clear_chat=true";
+}
+
+function logout() {
+    window.location.href = "bot.php?logout=true";
 }
 </script>
 

@@ -2,155 +2,196 @@
 
 /* Réinitialise les marges, les paddings et définit la boîte de dimensionnement à border-box pour tous les éléments */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif; /* Utilise la police Poppins importée */
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Poppins", sans-serif; /* Utilise la police Poppins importée */
 }
 
 /* Définit la hauteur de la page à 100%, centre les éléments et applique un fond gris clair */
 html,
 body {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f0f2f5; /* Couleur de fond */
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #f0f2f5; /* Couleur de fond */
 }
 
 /* Styles pour les boutons de bascule et de suppression du chat */
 .chat-toggle-btn,
-.chat-clear-btn {
-  background-color: #007bff; /* Couleur de fond bleue */
-  border: none; /* Pas de bordure */
-  color: white; /* Texte blanc */
-  padding: 10px; /* Espacement interne */
-  border-radius: 50%; /* Bordures arrondies en cercle */
-  font-size: 20px; /* Taille de la police */
-  cursor: pointer; /* Curseur pointeur */
-  position: fixed; /* Position fixe sur l'écran */
-  bottom: 80px; /* Position verticale depuis le bas */
-  right: 20px; /* Position horizontale depuis la droite */
-  z-index: 1000; /* Superposition élevée */
+.chat-clear-btn,
+.chat-logout-btn {
+	background-color: #007bff; /* Couleur de fond bleue */
+	border: none; /* Pas de bordure */
+	color: white; /* Texte blanc */
+	padding: 10px; /* Espacement interne */
+	border-radius: 50%; /* Bordures arrondies en cercle */
+	font-size: 20px; /* Taille de la police */
+	cursor: pointer; /* Curseur pointeur */
+	position: fixed; /* Position fixe sur l'écran */
+	bottom: 80px; /* Position verticale depuis le bas */
+	right: 20px; /* Position horizontale depuis la droite */
+	z-index: 1000; /* Superposition élevée */
 }
 
 /* Positionne le bouton de suppression du chat pour éviter le chevauchement avec le bouton de bascule */
 .chat-clear-btn {
-  bottom: 140px; /* Position verticale différente */
+	bottom: 140px; /* Position verticale différente */
+}
+.chat-logout-btn {
+	bottom: 20px;
 }
 
 /* Change la couleur de fond au survol */
 .chat-toggle-btn:hover,
 .chat-clear-btn:hover {
-  background-color: #0056b3; /* Couleur de fond plus foncée */
+	background-color: #0056b3; /* Couleur de fond plus foncée */
 }
 
 /* Styles pour le conteneur de chat fixe */
 .chat-container-fixed {
-  position: fixed; /* Position fixe sur l'écran */
-  bottom: 20px; /* Position verticale depuis le bas */
-  right: 20px; /* Position horizontale depuis la droite */
+	position: fixed; /* Position fixe sur l'écran */
+	bottom: 20px; /* Position verticale depuis le bas */
+	right: 20px; /* Position horizontale depuis la droite */
 }
 
 /* Styles pour le conteneur de chat */
 .chat-container {
-  width: 400px; /* Largeur fixe */
-  max-width: 100%; /* Largeur maximale de 100% */
-  background: #fff; /* Fond blanc */
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Ombre portée */
-  border-radius: 10px; /* Bordures arrondies */
-  overflow: hidden; /* Masque le contenu qui dépasse */
+	width: 400px; /* Largeur fixe */
+	max-width: 100%; /* Largeur maximale de 100% */
+	background: #fff; /* Fond blanc */
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Ombre portée */
+	border-radius: 10px; /* Bordures arrondies */
+	overflow: hidden; /* Masque le contenu qui dépasse */
 }
 
 /* Espacement interne du conteneur */
 .wrapper {
-  padding: 20px;
+	padding: 20px;
 }
 
 /* Styles pour le titre */
 .title {
-  font-size: 24px; /* Taille de la police */
-  font-weight: 600; /* Poids de la police */
-  text-align: center; /* Centre le texte */
-  color: #333; /* Couleur du texte */
-  margin-bottom: 20px; /* Marge inférieure */
+	font-size: 24px; /* Taille de la police */
+	font-weight: 600; /* Poids de la police */
+	text-align: center; /* Centre le texte */
+	color: #333; /* Couleur du texte */
+	margin-bottom: 20px; /* Marge inférieure */
 }
 
 /* Styles pour le formulaire de chat */
 .form {
-  max-height: 400px; /* Hauteur maximale */
-  overflow-y: auto; /* Barre de défilement verticale */
+	max-height: 400px; /* Hauteur maximale */
+	overflow-y: auto; /* Barre de défilement verticale */
 }
 
 /* Styles pour les messages */
 .inbox {
-  display: flex; /* Affichage en flex */
-  align-items: center; /* Alignement vertical centré */
-  margin-bottom: 10px; /* Marge inférieure */
+	display: flex; /* Affichage en flex */
+	align-items: center; /* Alignement vertical centré */
+	margin-bottom: 10px; /* Marge inférieure */
 }
 
 /* Alignement des messages utilisateur à droite */
 .user-inbox {
-  justify-content: flex-end;
+	justify-content: flex-end;
 }
 
 /* Alignement des messages du bot à gauche */
 .bot-inbox {
-  justify-content: flex-start;
+	justify-content: flex-start;
 }
 
 /* Styles pour l'en-tête des messages */
 .msg-header {
-  max-width: 75%; /* Largeur maximale */
-  padding: 10px; /* Espacement interne */
-  border-radius: 10px; /* Bordures arrondies */
-  background: #f0f0f0; /* Fond gris clair */
-  color: #333; /* Couleur du texte */
+	max-width: 75%; /* Largeur maximale */
+	padding: 10px; /* Espacement interne */
+	border-radius: 10px; /* Bordures arrondies */
+	background: #f0f0f0; /* Fond gris clair */
+	color: #333; /* Couleur du texte */
 }
 
 /* Styles pour les messages utilisateur */
 .user-inbox .msg-header {
-  background: #007bff; /* Fond bleu */
-  color: #fff; /* Texte blanc */
+	background: #007bff; /* Fond bleu */
+	color: #fff; /* Texte blanc */
 }
 
 /* Styles pour l'icône du bot */
 .bot-inbox .icon {
-  width: 30px; /* Largeur */
-  height: 30px; /* Hauteur */
-  background: #007bff; /* Fond bleu */
-  border-radius: 50%; /* Bordures arrondies en cercle */
-  display: flex; /* Affichage en flex */
-  justify-content: center; /* Centre horizontalement */
-  align-items: center; /* Centre verticalement */
-  color: #fff; /* Couleur de l'icône */
-  margin-right: 10px; /* Marge à droite */
+	width: 30px; /* Largeur */
+	height: 30px; /* Hauteur */
+	background: #007bff; /* Fond bleu */
+	border-radius: 50%; /* Bordures arrondies en cercle */
+	display: flex; /* Affichage en flex */
+	justify-content: center; /* Centre horizontalement */
+	align-items: center; /* Centre verticalement */
+	color: #fff; /* Couleur de l'icône */
+	margin-right: 10px; /* Marge à droite */
 }
 
 /* Styles pour les boutons d'option */
 .option-btn {
-  display: block; /* Affichage en bloc */
-  background: #007bff; /* Fond bleu */
-  color: #fff; /* Texte blanc */
-  border: none; /* Pas de bordure */
-  border-radius: 5px; /* Bordures arrondies */
-  padding: 10px 20px; /* Espacement interne */
-  margin: 5px 0; /* Marge verticale */
-  cursor: pointer; /* Curseur pointeur */
-  transition: background 0.3s; /* Transition pour l'effet de survol */
+	display: block; /* Affichage en bloc */
+	background: #007bff; /* Fond bleu */
+	color: #fff; /* Texte blanc */
+	border: none; /* Pas de bordure */
+	border-radius: 5px; /* Bordures arrondies */
+	padding: 10px 20px; /* Espacement interne */
+	margin: 5px 0; /* Marge verticale */
+	cursor: pointer; /* Curseur pointeur */
+	transition: background 0.3s; /* Transition pour l'effet de survol */
 }
 
 /* Change la couleur de fond au survol */
 .option-btn:hover {
-  background: #0056b3; /* Fond bleu plus foncé */
+	background: #0056b3; /* Fond bleu plus foncé */
 }
 
 /* Styles redondants pour les boutons de chat */
 .chat-toggle-btn,
-.chat-clear-btn {
-  background: #007bff; /* Fond bleu */
-  color: #fff; /* Texte blanc */
-  border: none; /* Pas de bordure */
-  border-radius: 5px; /* Bordures arrondies */
-  padding: 10px; /* Espacement interne */
+.chat-clear-btn,
+.chat-logout-btn {
+	background: #007bff; /* Fond bleu */
+	color: #fff; /* Texte blanc */
+	border: none; /* Pas de bordure */
+	border-radius: 5px; /* Bordures arrondies */
+	padding: 10px; /* Espacement interne */
+	width: 40px;
+}
+
+/* Style for the email label */
+form label {
+	font-size: 16px;
+	color: #333;
+	margin-bottom: 5px;
+	display: block;
+}
+
+/* Style for the email input field */
+form input[type="email"] {
+	width: 100%;
+	padding: 10px;
+	margin-bottom: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	font-size: 14px;
+}
+
+/* Style for the submit button */
+form button[type="submit"] {
+	background-color: #007bff;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	padding: 10px 20px;
+	cursor: pointer;
+	font-size: 16px;
+	transition: background-color 0.3s;
+}
+
+/* Change submit button color on hover */
+form button[type="submit"]:hover {
+	background-color: #0056b3;
 }
